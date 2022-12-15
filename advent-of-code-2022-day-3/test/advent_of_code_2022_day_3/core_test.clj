@@ -4,22 +4,48 @@
 
 (def file-1 "input-1.txt")
 
-(let [line1 (first (parse-input file-1))]
+(let [line-1 (first (parse-input file-1))]
   (deftest test-parse-input
-    (testing "reading file line by line"
-      (is (= line1 "vJrwpWtwJgWrhcsFMMfFFhFp")))
+    (testing "Reading file line by line"
+      (is (= line-1 "vJrwpWtwJgWrhcsFMMfFFhFp")))
 
-    (testing "compartments-char"
-      (is (= (first (compartments-split line1)) (seq "vJrwpWtwJgWr")))
-      (is (= (last (compartments-split line1)) (seq "hcsFMMfFFhFp")))
+    (testing "Compartments split"
+      (is (= (first (compartments-split line-1)) "vJrwpWtwJgWr"))
+      (is (= (last (compartments-split line-1)) "hcsFMMfFFhFp"))
       )
-
     )
   )
 
+(deftest test-parse-input-map
+  (testing "Reading file line by line & map priority"
+    (let [lines (parse-rucksack-file file-1)]
+      (is (= lines '(16
+                      38
+                      42
+                      22
+                      20
+                      19)))
+      ))
+  )
+
+(deftest test-sum-priorities
+  (testing "Reading file line by line & sum"
+    (let [total (rucksack-reorganization file-1)]
+      (is (= 157 total))
+      ))
+  )
+
+(deftest test-sum-priorities-puzzle
+  (testing "Reading file line by line & sum [puzzle]"
+    (let [total (rucksack-reorganization "input-2.txt")]
+      (is (= 7727 total))
+      ))
+  )
+
+
 (deftest test-in-both-compartments
-  (testing "find common element in sets"
-    (is (= (in-both-compartments (set "vJrwpWtwJgWr") (set "hcsFMMfFFhFp")) \p))
+  (testing "Find common element in compartments"
+    (is (= (in-both-compartments "vJrwpWtwJgWr" "hcsFMMfFFhFp") \p))
     )
   )
 
