@@ -12,6 +12,10 @@
     ))
 
 
+(defn find-groups [file-name]
+  (partition 3 (parse-input file-name))
+  )
+
 (defn priority [c]
   (if (Character/isUpperCase ^char c)
     (+ 27 (- (int c) (int \A)))
@@ -26,6 +30,9 @@
   (first (set/intersection (set compartments-1) (set compartments-2)))
   )
 
+(defn in-all-groups [[compartments-1 compartments-2 compartments-3]]
+  (first (set/intersection (set/intersection (set compartments-1) (set compartments-2)) (set compartments-3)))
+  )
 
 (defn parse-rucksack-file [file-name]
   (map priority
@@ -36,6 +43,14 @@
 
 (defn sum-priorities [coll]
   (reduce + coll))
+
+(defn parse-rucksack-file-group [file-name]
+  (map priority (map in-all-groups (find-groups file-name)))
+  )
+
+(defn rucksack-groups [file-name]
+  (sum-priorities (parse-rucksack-file-group file-name))
+  )
 
 (defn rucksack-reorganization [file-name]
   (sum-priorities (parse-rucksack-file file-name))
