@@ -26,17 +26,17 @@
   (map #(apply str %) (partition (/ (count rucksack) 2) rucksack))
   )
 
-(defn in-both-compartments [compartments-1 compartments-2]
+(defn in-both-compartments [[compartments-1 compartments-2]]
   (first (set/intersection (set compartments-1) (set compartments-2)))
   )
 
-(defn in-all-groups [[compartments-1 compartments-2 compartments-3]]
+(defn in-all-three-rucksacks [[compartments-1 compartments-2 compartments-3]]
   (first (set/intersection (set/intersection (set compartments-1) (set compartments-2)) (set compartments-3)))
   )
 
 (defn parse-rucksack-file [file-name]
   (map priority
-       (map #(in-both-compartments (first %) (last %))
+       (map in-both-compartments
             (map compartments-split
                  (parse-input file-name))))
   )
@@ -45,7 +45,7 @@
   (reduce + coll))
 
 (defn parse-rucksack-file-group [file-name]
-  (map priority (map in-all-groups (find-groups file-name)))
+  (map priority (map in-all-three-rucksacks (find-groups file-name)))
   )
 
 (defn rucksack-groups [file-name]

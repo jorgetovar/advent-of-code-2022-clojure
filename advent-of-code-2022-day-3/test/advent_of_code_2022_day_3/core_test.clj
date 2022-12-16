@@ -25,7 +25,7 @@
   (deftest test-parse-groups
     (testing "Reading file line by line by groups"
       (is (= group-1 expected))
-      (is (= (in-all-groups expected) \r))
+      (is (= (in-all-three-rucksacks expected) \r))
       )
     )
 
@@ -82,7 +82,7 @@
 
 (deftest test-in-both-compartments
   (testing "Find common element in compartments"
-    (is (= (in-both-compartments "vJrwpWtwJgWr" "hcsFMMfFFhFp") \p))
+    (is (= (in-both-compartments '("vJrwpWtwJgWr" "hcsFMMfFFhFp")) \p))
     )
   )
 
